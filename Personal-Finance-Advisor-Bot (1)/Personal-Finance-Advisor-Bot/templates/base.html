@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Personal Finance Advisor Bot{% endblock %}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- Sidebar (desktop) / offcanvas (mobile) -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <i class="fa-solid fa-wallet"></i>
+      <span>Finance Advisor</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="{{ url_for('dashboard.dashboard_page') }}" class="{{ 'active' if active_page == 'dashboard' else '' }}"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="{{ url_for('income.income_page') }}" class="{{ 'active' if active_page == 'income' else '' }}"><i class="fa-solid fa-money-bill-wave"></i> Income</a></li>
+      <li><a href="{{ url_for('expenses.expenses_page') }}" class="{{ 'active' if active_page == 'expenses' else '' }}"><i class="fa-solid fa-receipt"></i> Expenses</a></li>
+      <li><a href="{{ url_for('budget.budget_page') }}" class="{{ 'active' if active_page == 'budget' else '' }}"><i class="fa-solid fa-scale-balanced"></i> Budget</a></li>
+      <li><a href="{{ url_for('goals.goals_page') }}" class="{{ 'active' if active_page == 'goals' else '' }}"><i class="fa-solid fa-bullseye"></i> Goals</a></li>
+      <li><a href="{{ url_for('reports.reports_page') }}" class="{{ 'active' if active_page == 'reports' else '' }}"><i class="fa-solid fa-file-lines"></i> Reports</a></li>
+      <li><a href="{{ url_for('advisor.advisor_page') }}" class="{{ 'active' if active_page == 'advisor' else '' }}"><i class="fa-solid fa-robot"></i> AI Advisor</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <form action="{{ url_for('auth.load_demo_data') }}" method="POST" class="mb-2">
+        <button type="submit" class="btn btn-outline-light btn-sm w-100"><i class="fa-solid fa-flask"></i> Load Demo Data</button>
+      </form>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-sm w-100"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+  </nav>
+
+  <div class="main-area">
+    <!-- Topbar (mobile menu toggle) -->
+    <header class="topbar d-flex d-lg-none align-items-center justify-content-between">
+      <button class="btn btn-light" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+      <span class="fw-bold"><i class="fa-solid fa-wallet"></i> Finance Advisor</span>
+      <span></span>
+    </header>
+
+    <main class="content-area">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'danger' else category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+
+<div class="offcanvas-backdrop-custom" id="backdrop"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js is bundled locally (static/js/vendor/chart.umd.min.js) instead of
+     loaded from a CDN, so charts still work even on networks that block
+     external CDNs like cdnjs.cloudflare.com. -->
+<script src="{{ url_for('static', filename='js/vendor/chart.umd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script>
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const menuToggle = document.getElementById('menuToggle');
+  function closeSidebar() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      backdrop.classList.toggle('show');
+    });
+  }
+  backdrop.addEventListener('click', closeSidebar);
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

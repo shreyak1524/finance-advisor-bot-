@@ -1,0 +1,226 @@
+/* ==========================================================================
+   Personal Finance Advisor Bot - Main Stylesheet
+   ========================================================================== */
+
+:root {
+  --primary: #4f6df5;
+  --primary-dark: #3b52c4;
+  --sidebar-bg: #1f2540;
+  --sidebar-bg-light: #2b3260;
+  --success: #22b07d;
+  --danger: #e5534b;
+  --warning: #f0ad4e;
+  --bg-soft: #f4f6fb;
+  --card-shadow: 0 4px 18px rgba(31, 37, 64, 0.06);
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg-soft);
+  font-family: "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1f2540;
+}
+
+/* ---------- App shell / layout ---------- */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, var(--sidebar-bg), var(--sidebar-bg-light));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1030;
+  transition: transform 0.25s ease;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 8px 10px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 14px;
+}
+.sidebar-brand i { color: #8fa4ff; font-size: 1.4rem; }
+
+.sidebar-nav { list-style: none; padding: 0; margin: 0; flex: 1; }
+.sidebar-nav li { margin-bottom: 4px; }
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.sidebar-nav a i { width: 18px; text-align: center; }
+.sidebar-nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.sidebar-nav a.active { background: var(--primary); color: #fff; font-weight: 600; }
+
+.sidebar-footer { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px; }
+
+.main-area {
+  margin-left: 240px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background: #fff;
+  padding: 12px 18px;
+  box-shadow: var(--card-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.content-area {
+  padding: 24px;
+  flex: 1;
+}
+
+.offcanvas-backdrop-custom {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1025;
+}
+.offcanvas-backdrop-custom.show { display: block; }
+
+@media (max-width: 991.98px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-area { margin-left: 0; }
+}
+
+/* ---------- Page header ---------- */
+.page-title { font-weight: 700; font-size: 1.6rem; margin-bottom: 2px; }
+.page-subtitle { font-size: 0.9rem; }
+
+/* ---------- Cards ---------- */
+.card-panel {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+}
+.card-panel h5 { font-weight: 700; margin-bottom: 16px; font-size: 1.05rem; }
+.card-panel h5 i { color: var(--primary); margin-right: 6px; }
+
+.stat-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+}
+.stat-card i { font-size: 1.6rem; padding: 14px; border-radius: 12px; color: #fff; }
+.stat-label { font-size: 0.8rem; color: #7a819c; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+.stat-value { font-size: 1.35rem; font-weight: 700; }
+
+.stat-income i { background: #4f6df5; }
+.stat-expense i { background: #e5534b; }
+.stat-savings i { background: #22b07d; }
+.stat-rate i { background: #f0ad4e; }
+
+/* ---------- Recommendations ---------- */
+.recommendation-list { list-style: none; padding: 0; margin: 0; }
+.recommendation-list li {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f4f6fb;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  border-left: 4px solid var(--primary);
+}
+
+/* ---------- Goal cards ---------- */
+.goal-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  padding: 18px;
+  height: 100%;
+}
+.goal-card h6 { font-weight: 700; margin-bottom: 10px; }
+.goal-progress-wrap .progress { height: 12px; border-radius: 8px; }
+
+/* ---------- Chat window (advisor) ---------- */
+.chat-window {
+  height: 380px;
+  overflow-y: auto;
+  background: #f4f6fb;
+  border-radius: 12px;
+  padding: 16px;
+}
+.chat-message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.chat-user {
+  background: var(--primary);
+  color: #fff;
+  margin-left: auto;
+  border-bottom-right-radius: 2px;
+}
+.chat-bot {
+  background: #fff;
+  box-shadow: var(--card-shadow);
+  border-bottom-left-radius: 2px;
+}
+
+/* ---------- Auth pages ---------- */
+.auth-body {
+  background: linear-gradient(135deg, #4f6df5, #1f2540);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.auth-wrapper { width: 100%; max-width: 420px; }
+.auth-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+.auth-brand { text-align: center; margin-bottom: 20px; }
+.auth-brand i { font-size: 2.2rem; color: var(--primary); margin-bottom: 8px; display: block; }
+.auth-brand h2 { font-weight: 700; font-size: 1.4rem; margin-bottom: 4px; }
+
+/* ---------- Misc ---------- */
+.badge-status-exceeded { background: #fdecea; color: var(--danger); }
+.badge-status-warning { background: #fff6e5; color: #b3781c; }
+.badge-status-on_track { background: #e7f8f1; color: var(--success); }
+.badge-status-no_budget { background: #eef0f6; color: #6b7280; }
+
+.progress-bar.bg-danger-soft { background-color: var(--danger) !important; }
+.progress-bar.bg-warning-soft { background-color: var(--warning) !important; }
+.progress-bar.bg-success-soft { background-color: var(--success) !important; }

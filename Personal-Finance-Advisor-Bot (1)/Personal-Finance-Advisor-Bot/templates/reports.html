@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% set active_page = 'reports' %}
+{% block title %}Reports - Personal Finance Advisor Bot{% endblock %}
+{% block content %}
+
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <div>
+    <h1 class="page-title">Monthly Report</h1>
+    <p class="page-subtitle text-muted mb-0">Deep dive into a specific month</p>
+  </div>
+  <div class="d-flex gap-2">
+    <select id="monthSelect" class="form-select"></select>
+    <select id="yearSelect" class="form-select"></select>
+  </div>
+</div>
+
+<div class="card-panel mt-3">
+  <p id="summaryText" class="mb-0 fs-6"></p>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card stat-income"><i class="fa-solid fa-money-bill-trend-up"></i>
+      <div><div class="stat-label">Income</div><div class="stat-value" id="rIncome">₹0</div></div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card stat-expense"><i class="fa-solid fa-receipt"></i>
+      <div><div class="stat-label">Expenses</div><div class="stat-value" id="rExpenses">₹0</div></div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card stat-savings"><i class="fa-solid fa-piggy-bank"></i>
+      <div><div class="stat-label">Savings</div><div class="stat-value" id="rSavings">₹0</div></div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card stat-rate"><i class="fa-solid fa-percent"></i>
+      <div><div class="stat-label">Savings Rate</div><div class="stat-value" id="rRate">0%</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-6">
+    <div class="card-panel h-100">
+      <h5><i class="fa-solid fa-layer-group"></i> Category Analysis</h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead><tr><th>Category</th><th class="text-end">Amount</th><th class="text-end">% of Total</th></tr></thead>
+          <tbody id="categoryAnalysisBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card-panel h-100">
+      <h5><i class="fa-solid fa-scale-balanced"></i> Budget Performance</h5>
+      <div id="budgetPerformanceArea"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-6">
+    <div class="card-panel h-100">
+      <h5><i class="fa-solid fa-chart-line"></i> Income Variability</h5>
+      <div id="incomeVariabilityArea"></div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card-panel h-100">
+      <h5><i class="fa-solid fa-lightbulb"></i> Recommendations</h5>
+      <ul id="reportRecommendations" class="recommendation-list"></ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}
